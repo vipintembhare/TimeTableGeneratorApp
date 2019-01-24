@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="TimeTableGenerator_browser.jnlp">
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="TimeTableGenerator.jnlp">
   <information>
     <title>TimeTableGenerator</title>
     <vendor>Vipin</vendor>
@@ -8,9 +8,9 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="TimeTableGenerator.jar" size="12614" download="eager" />
+    <jar href="TimeTableGenerator.jar" size="28335" download="eager" />
   </resources>
-  <applet-desc  width="800" height="600" main-class="timetablegenerator.TimeTableGenerator"  name="TimeTableGenerator" >
-  </applet-desc>
+  <application-desc main-class="timetablegenerator.TimeTableGenerator"  name="TimeTableGenerator" >
+  </application-desc>
   <update check="always"/>
 </jnlp>

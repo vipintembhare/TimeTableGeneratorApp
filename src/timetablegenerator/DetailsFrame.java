@@ -9,12 +9,12 @@ import javax.swing.JFrame;
  *
  * @author Vipin
  */
-public class MainHomeFrame extends javax.swing.JFrame {
+public class DetailsFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form MainHomeFrame
      */
-    public MainHomeFrame() {
+    public DetailsFrame() {
         initComponents();
     }
 
@@ -33,14 +33,14 @@ public class MainHomeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Enter Details");
+        jButton1.setText("Enter Teacher Details");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("View Time Table");
+        jButton2.setText("Enter Course Details");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -81,13 +81,19 @@ public class MainHomeFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       this.dispose();
+        JFrame frame= new AddCourse();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+               
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true); // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          System.out.println("Teacher Details");
         this.dispose();
-        JFrame frame= new DetailsFrame();
+        JFrame frame= new TeacherFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                
                 frame.pack();
@@ -113,20 +119,21 @@ public class MainHomeFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetailsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetailsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetailsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainHomeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DetailsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainHomeFrame().setVisible(true);
+                new DetailsFrame().setVisible(true);
             }
         });
     }
