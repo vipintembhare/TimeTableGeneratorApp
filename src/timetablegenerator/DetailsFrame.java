@@ -5,6 +5,7 @@
  */
 package timetablegenerator;
 import javax.swing.JFrame;
+import utils.SwingUtils;
 /**
  *
  * @author Vipin
@@ -91,15 +92,7 @@ public class DetailsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         System.out.println("Teacher Details");
-        this.dispose();
-        JFrame frame= new TeacherFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                                           // TODO add your handling code here:
+         SwingUtils.showNextFrames(this, new TeacherFrame());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
