@@ -5,17 +5,40 @@
  */
 package timetablegenerator;
 
+import dbutils.DBUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import utils.CommonUtils;
+import utils.SwingUtils;
+
 /**
  *
  * @author Mayur
  */
 public class TeacherFrame extends javax.swing.JFrame {
-
-    /**
+ private boolean isUpdate=false;
+ private int selectedRow;
+ private Connection connection; 
+ /**
      * Creates new form TeacherFrame
      */
     public TeacherFrame() {
+  
         initComponents();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Vector<String> columnNames = new Vector<String>();
+                  columnNames.addElement("Id");
+                  columnNames.addElement("Name");
+                  columnNames.addElement("Department");
+                  columnNames.addElement("Expert in Subjects"); 
+        model.setDataVector(DBUtils.teacherData, columnNames);
     }
 
     /**
@@ -45,6 +68,8 @@ public class TeacherFrame extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,9 +87,9 @@ public class TeacherFrame extends javax.swing.JFrame {
 
         jLabel6.setText("         Add Staff");
 
-        jLabel7.setText("Subject Expert");
+        jLabel7.setText("Expert in Subjects");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Networking", "Database", "English", "Programming" }));
         jComboBox2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox2ActionPerformed(evt);
@@ -72,23 +97,59 @@ public class TeacherFrame extends javax.swing.JFrame {
         });
 
         jButton1.setText("Save");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Reset");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Cancel");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Name", "Id", "Departement", "Subject Expert"
+                "Id", "Name", "Department", "Expert in Subjects"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        jButton4.setText("Update");
+        jButton4.setToolTipText("");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Delete");
+        jButton5.setToolTipText("");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -122,8 +183,12 @@ public class TeacherFrame extends javax.swing.JFrame {
                         .addComponent(jButton3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(90, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton4)
+                            .addComponent(jButton5))))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -145,17 +210,23 @@ public class TeacherFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
                 .addGap(56, 56, 56)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(256, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton5)))
+                .addContainerGap(262, Short.MAX_VALUE))
         );
 
         pack();
@@ -170,6 +241,116 @@ public class TeacherFrame extends javax.swing.JFrame {
                                                   // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+             Connection connection;
+        PreparedStatement statement=null;
+        String name= jTextField1.getText();
+        String id= jTextField2.getText();
+        String department= jTextField3.getText();
+        String expertInSubject= (String)jComboBox2.getSelectedItem();
+         if(CommonUtils.isNullOrEmpty(name) || CommonUtils.isNullOrEmpty(id) || CommonUtils.isNullOrEmpty(department)||CommonUtils.isNullOrEmpty(expertInSubject))  {
+            JOptionPane.showMessageDialog(null, "Enter all details");
+            return;
+        } 
+        try {
+            //inserting data in staff table.
+            connection= DBUtils.getConnection();
+            if(!isUpdate){
+            statement=connection.prepareStatement("INSERT INTO staff values (?,?,?,?)");
+            }else{
+                statement=connection.prepareStatement("UPDATE staff set name=?,department=?,expert_in_subject=? where id=?");
+            }
+            statement.setString(1, name);
+            statement.setString(4, id);
+            statement.setString(2, department);
+            statement.setString(3, expertInSubject);
+            statement.execute();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            if(!isUpdate){
+            //Data insert is successful, we can add this data in table
+            Object[] row = { id, name, department, expertInSubject };
+            model.addRow(row);
+             JOptionPane.showMessageDialog(null, "Staff record added");
+            }else{
+            //if update is successful
+            String[] row = { name, department, expertInSubject };
+            for(int i=0;i<3;i++){
+                jTable1.setValueAt(row[i], selectedRow, i+1);
+            }
+             JOptionPane.showMessageDialog(null, "Staff details updated for id :"+ id);
+              jTextField2.setEditable(true);
+         jTextField2.setEnabled(true);
+         reset();
+             selectedRow=-1;
+             isUpdate=false;
+            }
+            //reseting fields
+            reset();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            DBUtils.closeStatementAndResultSet(statement,null); 
+        }
+                 }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+          selectedRow= jTable1.getSelectedRow();
+          if(selectedRow== -1){
+                       JOptionPane.showMessageDialog(null, "Select table record to update");
+                       return;
+          }
+          String name=(String)jTable1.getModel().getValueAt(selectedRow,1);
+          String id=(String)jTable1.getModel().getValueAt(selectedRow,0);
+          String department=(String)jTable1.getModel().getValueAt(selectedRow,2);
+          String expertInSubject=(String)jTable1.getModel().getValueAt(selectedRow,3);
+         jTextField1.setText(name);
+         jTextField2.setText(id);
+         jTextField2.setEditable(false);
+         jTextField2.setEnabled(false);
+         jTextField3.setText(department);
+         jComboBox2.setSelectedItem(expertInSubject);
+         isUpdate=true;
+         JOptionPane.showMessageDialog(null, "Information loaded in from.Update the information and click Save");
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+         selectedRow= jTable1.getSelectedRow();
+         if(selectedRow== -1){
+                       JOptionPane.showMessageDialog(null, "Select table record to update");
+                       return;
+          }
+         PreparedStatement statement=null;
+         connection= DBUtils.getConnection();
+            try {
+                statement=connection.prepareStatement("delete from staff where id=?");
+                statement.setString(1, (String)jTable1.getModel().getValueAt(selectedRow,0));
+                statement.execute();
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                model.removeRow(selectedRow);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }finally{
+            }
+            
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       reset();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       SwingUtils.showNextFrames(this, new DetailsFrame());
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        DBUtils.teacherData=model.getDataVector();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void reset(){
+    jTextField1.setText("");
+       jTextField2.setText("");
+       jTextField3.setText("");
+       jComboBox2.setSelectedIndex(0);
+    }
     /**
      * @param args the command line arguments
      */
@@ -212,6 +393,8 @@ public class TeacherFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -5,7 +5,18 @@
  */
 package timetablegenerator;
 
+import dbutils.DBUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import utils.CommonUtils;
+import utils.SwingUtils;
 
 /**
  *
@@ -115,14 +126,39 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        System.out.println("Bypassing login authentication for now");
-        this.dispose();
-        JFrame frame= new MainHomeFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-               
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
+        Connection connection;
+        PreparedStatement statement=null;
+        ResultSet rs=null;
+        String username= jTextField1.getText();
+        String pass= new String(this.password.getPassword());
+        if(CommonUtils.isNullOrEmpty(username) || CommonUtils.isNullOrEmpty(pass))  {
+            JOptionPane.showMessageDialog(null, "Enter credentials");
+            return;
+        } 
+        
+        try {
+            //Authentication using Users table.
+            connection= DBUtils.getConnection();
+            statement=connection.prepareStatement("select 1 from users where username=? and password=?");
+            statement.setString(1, username);
+            statement.setString(2, pass);
+            rs=statement.executeQuery();
+            if(rs.next()){
+                SwingUtils.showNextFrames(this, new MainHomeFrame());
+                DBUtils.loadTeacherDetails();
+            }
+            else{
+                jTextField1.setText("");
+                password.setText("");
+                JOptionPane.showMessageDialog(null, "Incorrect credentials");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            DBUtils.closeStatementAndResultSet(statement,rs); 
+        }
+
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
