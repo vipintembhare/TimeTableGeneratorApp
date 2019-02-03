@@ -74,4 +74,13 @@ public class DBUtils {
                 Logger.getLogger(DBUtils.class.getName()).log(Level.SEVERE, null, ex);
             }
     }
+    
+    public static void closeConnection(){
+    try{
+            if(null !=  connection)
+                connection.close();
+             } catch (SQLException ex) {
+                Logger.getLogger(DBUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }
 }

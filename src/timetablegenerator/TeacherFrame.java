@@ -331,7 +331,8 @@ public class TeacherFrame extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(TeacherFrame.class.getName()).log(Level.SEVERE, null, ex);
             }finally{
-            }
+            DBUtils.closeStatementAndResultSet(statement,null); 
+        }
             
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -385,6 +386,7 @@ public class TeacherFrame extends javax.swing.JFrame {
             }
         });
     }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
