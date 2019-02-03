@@ -45,7 +45,7 @@ public class DBUtils {
         PreparedStatement statement=null;
         ResultSet rs=null;
         try {
-            statement=connection.prepareStatement("select  * from staff",ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            statement=connection.prepareStatement("select  * from staff");
             rs=statement.executeQuery();
             while(rs.next()){
                  Vector<String> row = new Vector<String>();

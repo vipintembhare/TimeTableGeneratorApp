@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="TimeTableGenerator.jar" size="40060" download="eager" />
+    <jar href="TimeTableGenerator.jar" size="40085" download="eager" />
     <jar href="lib\hsqldb.jar" size="1552127" download="eager" />
   </resources>
   <application-desc main-class="timetablegenerator.TimeTableGenerator"  name="TimeTableGenerator" >

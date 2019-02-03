@@ -258,13 +258,17 @@ public class TeacherFrame extends javax.swing.JFrame {
             connection= DBUtils.getConnection();
             if(!isUpdate){
             statement=connection.prepareStatement("INSERT INTO staff values (?,?,?,?)");
+            statement.setString(1, name);
+            statement.setString(2, id);
+            statement.setString(3, department);
+            statement.setString(4, expertInSubject);
             }else{
                 statement=connection.prepareStatement("UPDATE staff set name=?,department=?,expert_in_subject=? where id=?");
-            }
             statement.setString(1, name);
             statement.setString(4, id);
             statement.setString(2, department);
             statement.setString(3, expertInSubject);
+            }
             statement.execute();
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             if(!isUpdate){
@@ -281,7 +285,7 @@ public class TeacherFrame extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null, "Staff details updated for id :"+ id);
               jTextField2.setEditable(true);
          jTextField2.setEnabled(true);
-         reset();
+         
              selectedRow=-1;
              isUpdate=false;
             }
@@ -311,7 +315,7 @@ public class TeacherFrame extends javax.swing.JFrame {
          jTextField3.setText(department);
          jComboBox2.setSelectedItem(expertInSubject);
          isUpdate=true;
-         JOptionPane.showMessageDialog(null, "Information loaded in from.Update the information and click Save");
+         JOptionPane.showMessageDialog(null, "Information loaded in form.Update the information and click Save");
 
     }//GEN-LAST:event_jButton4ActionPerformed
 
